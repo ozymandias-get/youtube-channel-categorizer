@@ -1,401 +1,252 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="tr">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>YouTube Channel Categorizer</title>
+  <title>YouTube Kanal Kategorilendiricisi</title>
   <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
-    
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      min-height: 100vh;
-      padding: 20px;
-    }
-    
-    .container {
-      max-width: 1200px;
-      margin: 0 auto;
-      background: white;
-      border-radius: 15px;
-      box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-      overflow: hidden;
-    }
-    
-    .header {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
-      padding: 40px 20px;
-      text-align: center;
-    }
-    
-    .header h1 {
-      font-size: 2.5em;
-      margin-bottom: 10px;
-    }
-    
-    .header p {
-      font-size: 1.1em;
-      opacity: 0.9;
-    }
-    
-    .content {
-      display: grid;
-      grid-template-columns: 1fr 2fr;
-      gap: 30px;
-      padding: 40px;
-    }
-    
-    .sidebar {
-      border-right: 2px solid #eee;
-      padding-right: 30px;
-    }
-    
-    .form-group {
-      margin-bottom: 25px;
-    }
-    
-    .form-group label {
-      display: block;
-      margin-bottom: 8px;
-      font-weight: 600;
-      color: #333;
-    }
-    
-    .form-group input,
-    .form-group textarea {
-      width: 100%;
-      padding: 12px;
-      border: 2px solid #ddd;
-      border-radius: 8px;
-      font-family: inherit;
-      font-size: 1em;
-      transition: border-color 0.3s;
-    }
-    
-    .form-group input:focus,
-    .form-group textarea:focus {
-      outline: none;
-      border-color: #667eea;
-    }
-    
-    button {
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      color: white;
-      padding: 12px 24px;
-      border: none;
-      border-radius: 8px;
-      font-weight: 600;
-      cursor: pointer;
-      font-size: 1em;
-      transition: transform 0.2s, box-shadow 0.2s;
-      width: 100%;
-    }
-    
-    button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
-    }
-    
-    button:active {
-      transform: translateY(0);
-    }
-    
-    .categories-list {
-      margin-top: 30px;
-    }
-    
-    .category-badge {
-      display: inline-block;
-      background: #f0f0f0;
-      padding: 10px 15px;
-      border-radius: 20px;
-      margin: 8px 8px 8px 0;
-      cursor: pointer;
-      transition: all 0.3s;
-      border: 2px solid transparent;
-    }
-    
-    .category-badge:hover {
-      background: #667eea;
-      color: white;
-      border-color: #667eea;
-    }
-    
-    .category-badge.active {
-      background: #667eea;
-      color: white;
-      border-color: #667eea;
-    }
-    
-    .channels-section h2 {
-      color: #333;
-      margin-bottom: 20px;
-      font-size: 1.8em;
-    }
-    
-    .channel-card {
-      background: #f9f9f9;
-      padding: 20px;
-      border-radius: 10px;
-      margin-bottom: 15px;
-      border-left: 4px solid #667eea;
-      transition: all 0.3s;
-    }
-    
-    .channel-card:hover {
-      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-      transform: translateX(5px);
-    }
-    
-    .channel-name {
-      font-weight: 700;
-      font-size: 1.2em;
-      color: #333;
-      margin-bottom: 5px;
-    }
-    
-    .channel-date {
-      color: #999;
-      font-size: 0.9em;
-    }
-    
-    .channel-category {
-      display: inline-block;
-      background: #667eea;
-      color: white;
-      padding: 5px 10px;
-      border-radius: 5px;
-      font-size: 0.85em;
-      margin-top: 10px;
-    }
-    
-    .no-channels {
-      text-align: center;
-      color: #999;
-      padding: 40px 20px;
-      font-size: 1.1em;
-    }
-    
-    @media (max-width: 768px) {
-      .content {
-        grid-template-columns: 1fr;
-        gap: 20px;
-        padding: 20px;
-      }
-      
-      .sidebar {
-        border-right: none;
-        border-bottom: 2px solid #eee;
-        padding-right: 0;
-        padding-bottom: 20px;
-      }
-      
-      .header h1 {
-        font-size: 1.8em;
-      }
-    }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body { font-family: 'Segoe UI', Tahoma, Geneva, sans-serif; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); min-height: 100vh; }
+    .container { max-width: 1400px; margin: 0 auto; padding: 20px; }
+    .header { background: white; border-radius: 15px; padding: 30px; margin-bottom: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+    .header h1 { color: #333; font-size: 2.5em; margin-bottom: 10px; }
+    .header p { color: #666; font-size: 1.1em; }
+    .auth-section { display: flex; gap: 10px; align-items: center; margin-top: 20px; }
+    .btn { padding: 12px 24px; border: none; border-radius: 8px; font-weight: 600; cursor: pointer; transition: all 0.3s; font-size: 1em; }
+    .btn-primary { background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(102,126,234,0.3); }
+    .btn-secondary { background: #f0f0f0; color: #333; }
+    .btn-secondary:hover { background: #e0e0e0; }
+    .user-info { background: white; padding: 15px 20px; border-radius: 8px; display: inline-block; }
+    .main-content { display: grid; grid-template-columns: 1fr 2fr; gap: 20px; }
+    .sidebar { background: white; border-radius: 15px; padding: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+    .content { background: white; border-radius: 15px; padding: 30px; box-shadow: 0 10px 30px rgba(0,0,0,0.2); }
+    .form-group { margin-bottom: 20px; }
+    .form-group label { display: block; margin-bottom: 8px; font-weight: 600; color: #333; }
+    .form-group input, .form-group select { width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 8px; font-family: inherit; font-size: 1em; }
+    .form-group input:focus, .form-group select:focus { outline: none; border-color: #667eea; }
+    .subscription-item { background: #f9f9f9; padding: 15px; border-radius: 10px; margin-bottom: 15px; display: flex; gap: 15px; align-items: center; border-left: 4px solid #667eea; transition: all 0.3s; }
+    .subscription-item:hover { box-shadow: 0 5px 15px rgba(0,0,0,0.1); transform: translateX(5px); }
+    .subscription-thumbnail { width: 60px; height: 60px; border-radius: 50%; object-fit: cover; }
+    .subscription-info { flex: 1; }
+    .subscription-title { font-weight: 700; color: #333; margin-bottom: 5px; }
+    .subscription-actions { display: flex; gap: 10px; }
+    .select-btn, .uncategorize-btn { padding: 8px 12px; font-size: 0.9em; border: none; border-radius: 6px; cursor: pointer; }
+    .select-btn { background: #667eea; color: white; }
+    .uncategorize-btn { background: #ff6b6b; color: white; }
+    .category-badge { display: inline-block; background: #667eea; color: white; padding: 8px 12px; border-radius: 20px; margin-top: 10px; font-size: 0.9em; }
+    .no-subscriptions { text-align: center; color: #999; padding: 40px 20px; font-size: 1.1em; }
+    h2 { color: #333; margin-bottom: 20px; font-size: 1.8em; }
+    h3 { color: #333; margin-bottom: 15px; font-size: 1.3em; }
+    .category-list { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 15px; }
+    .category-item { background: #f0f0f0; padding: 10px 15px; border-radius: 20px; cursor: pointer; transition: all 0.3s; border: 2px solid transparent; }
+    .category-item:hover { background: #667eea; color: white; }
+    .category-item.active { background: #667eea; color: white; border-color: #667eea; }
+    .loading { text-align: center; color: #667eea; font-size: 1.2em; padding: 20px; }
+    .error { background: #ffebee; color: #c62828; padding: 15px; border-radius: 8px; margin-bottom: 20px; }
+    .success { background: #e8f5e9; color: #2e7d32; padding: 15px; border-radius: 8px; margin-bottom: 20px; }
+    @media (max-width: 1024px) { .main-content { grid-template-columns: 1fr; } }
   </style>
 </head>
 <body>
   <div class="container">
     <div class="header">
-      <h1>🎬 YouTube Channel Categorizer</h1>
-      <p>Organize your favorite YouTube channels into custom categories</p>
-    </div>
-    
-    <div class="content">
-      <div class="sidebar">
-        <h3 style="margin-bottom: 20px; color: #333;">New Category</h3>
-        
-        <div class="form-group">
-          <label>Category Name</label>
-          <input type="text" id="categoryName" placeholder="e.g., Entertainment">
-        </div>
-        
-        <button onclick="addCategory()">+ Add Category</button>
-        
-        <div class="categories-list">
-          <h4 style="margin-bottom: 15px; color: #333;">Your Categories</h4>
-          <div id="categoriesList"></div>
-        </div>
-        
-        <hr style="margin: 30px 0; border: none; border-top: 2px solid #eee;">
-        
-        <h3 style="margin-bottom: 20px; color: #333;">Add Channel</h3>
-        
-        <div class="form-group">
-          <label>Channel ID</label>
-          <input type="text" id="channelId" placeholder="YouTube Channel ID">
-        </div>
-        
-        <div class="form-group">
-          <label>Channel Name</label>
-          <input type="text" id="channelName" placeholder="Channel Name">
-        </div>
-        
-        <div class="form-group">
-          <label>Select Category</label>
-          <select id="categorySelect" style="width: 100%; padding: 12px; border: 2px solid #ddd; border-radius: 8px; font-family: inherit;">
-            <option value="">-- Select Category --</option>
-          </select>
-        </div>
-        
-        <button onclick="addChannel()">➕ Add Channel</button>
+      <h1>📺 YouTube Kanal Kategorilendiricisi</h1>
+      <p>YouTube aboneliklerinizi kategorilere ayırlayarak düzenleyin</p>
+      <div class="auth-section" id="authSection">
+        <a href="/auth/google" class="btn btn-primary">🔐 Google ile Giriş Yap</a>
       </div>
-      
-      <div class="channels-section">
-        <h2>📺 Channels</h2>
-        <div id="channelsList" class="no-channels">No channels added yet</div>
+    </div>
+
+    <div class="main-content" id="mainContent" style="display: none;">
+      <div class="sidebar">
+        <h3>Kategoriler</h3>
+        
+        <div class="form-group">
+          <label>Yeni Kategori Adı</label>
+          <input type="text" id="categoryName" placeholder="örn: Eğlence">
+        </div>
+        <button class="btn btn-primary" style="width: 100%; margin-bottom: 30px;" onclick="addCategory()">+ Kategori Ekle</button>
+        
+        <div class="category-list" id="categoryList"></div>
+      </div>
+
+      <div class="content">
+        <h2>📺 Aboneliklerim</h2>
+        <div id="subscriptionsContainer" class="loading">Abonelikler yükleniyor...</div>
       </div>
     </div>
   </div>
-  
+
   <script>
-    const API_URL = 'http://localhost:3000/api';
-    let currentCategoryId = null;
-    
-    async function loadCategories() {
+    const API_BASE = window.location.origin + '/api';
+    let currentCategory = null;
+    let allSubscriptions = [];
+    let currentUser = null;
+
+    async function init() {
       try {
-        const res = await fetch(API_URL + '/categories');
-        const categories = await res.json();
-        
-        const list = document.getElementById('categoriesList');
-        list.innerHTML = '';
-        
-        categories.forEach(cat => {
-          const badge = document.createElement('div');
-          badge.className = 'category-badge';
-          if (currentCategoryId === cat.id) badge.classList.add('active');
-          badge.textContent = cat.name;
-          badge.onclick = () => selectCategory(cat.id);
-          list.appendChild(badge);
-        });
-        
-        const select = document.getElementById('categorySelect');
-        const currentValue = select.value;
-        select.innerHTML = '<option value="">-- Select Category --</option>';
-        categories.forEach(cat => {
-          const opt = document.createElement('option');
-          opt.value = cat.id;
-          opt.textContent = cat.name;
-          select.appendChild(opt);
-        });
-        select.value = currentValue;
-      } catch (err) {
-        console.error('Error loading categories:', err);
-      }
-    }
-    
-    async function loadChannels() {
-      try {
-        let res;
-        if (currentCategoryId) {
-          res = await fetch(API_URL + '/channels/' + currentCategoryId);
-        } else {
-          res = await fetch(API_URL + '/all-channels');
-        }
-        
-        const channels = await res.json();
-        const list = document.getElementById('channelsList');
-        
-        if (channels.length === 0) {
-          list.innerHTML = '<div class="no-channels">No channels in this category</div>';
+        const userRes = await fetch(API_BASE + '/user');
+        if (!userRes.ok) {
+          document.getElementById('mainContent').style.display = 'none';
           return;
         }
+        currentUser = await userRes.json();
+        document.getElementById('mainContent').style.display = 'grid';
+        document.getElementById('authSection').innerHTML = `
+          <div class="user-info">👤 ${currentUser.name} (${currentUser.email})</div>
+          <button class="btn btn-secondary" onclick="logout()">Çıkış Yap</button>
+        `;
         
-        list.innerHTML = '';
-        channels.forEach(ch => {
-          const card = document.createElement('div');
-          card.className = 'channel-card';
-          const date = new Date(ch.added_at).toLocaleDateString();
-          card.innerHTML = `
-            <div class="channel-name">${ch.channel_name}</div>
-            <div class="channel-date">Added: ${date}</div>
-            <div class="channel-category">${ch.category_name || 'Uncategorized'}</div>
-          `;
-          list.appendChild(card);
-        });
-      } catch (err) {
-        console.error('Error loading channels:', err);
+        await loadCategories();
+        await loadSubscriptions();
+      } catch (error) {
+        console.error('Init error:', error);
       }
     }
-    
+
+    async function loadCategories() {
+      try {
+        const res = await fetch(API_BASE + '/categories');
+        const categories = await res.json();
+        
+        let html = '';
+        categories.forEach(cat => {
+          html += `<div class="category-item" onclick="filterByCategory(${cat.id})">${cat.name}</div>`;
+        });
+        
+        document.getElementById('categoryList').innerHTML = html || '<p>Kategori bulunmuyor</p>';
+      } catch (error) {
+        console.error('Error loading categories:', error);
+      }
+    }
+
+    async function loadSubscriptions() {
+      try {
+        const res = await fetch(API_BASE + '/youtube/subscriptions');
+        if (!res.ok) throw new Error('Failed to fetch subscriptions');
+        
+        const subs = await res.json();
+        allSubscriptions = subs.map(sub => ({
+          channelId: sub.snippet.resourceId.channelId,
+          channelTitle: sub.snippet.title,
+          channelThumbnail: sub.snippet.thumbnails.default.url
+        }));
+
+        displaySubscriptions(allSubscriptions);
+      } catch (error) {
+        console.error('Error:', error);
+        document.getElementById('subscriptionsContainer').innerHTML = 
+          '<div class="error">❌ Abonelikler yüklenemedi. Lütfen Google OAuth ayarlarınızı kontrol edin.</div>';
+      }
+    }
+
+    function displaySubscriptions(subscriptions) {
+      const container = document.getElementById('subscriptionsContainer');
+      if (!subscriptions || subscriptions.length === 0) {
+        container.innerHTML = '<div class="no-subscriptions">Abonelik bulunmuyor</div>';
+        return;
+      }
+
+      let html = `<p>${subscriptions.length} abonelik bulundu</p><hr style="margin: 20px 0;">`;
+      subscriptions.forEach(sub => {
+        html += `
+          <div class="subscription-item">
+            <img src="${sub.channelThumbnail}" alt="${sub.channelTitle}" class="subscription-thumbnail">
+            <div class="subscription-info">
+              <div class="subscription-title">${sub.channelTitle}</div>
+              <div class="subscription-actions">
+                <select onchange="categorizeSubscription('${sub.channelId}', '${sub.channelTitle}', '${sub.channelThumbnail}', this.value)" style="padding: 8px; border-radius: 6px; border: 2px solid #ddd;">
+                  <option value="">-- Kategori Seç --</option>
+                  <option id="categories-${sub.channelId}"></option>
+                </select>
+              </div>
+            </div>
+          </div>
+        `;
+      });
+
+      container.innerHTML = html;
+      
+      // Load categories for dropdown
+      fetch(API_BASE + '/categories').then(r => r.json()).then(cats => {
+        subscriptions.forEach(sub => {
+          let options = '<option value="">-- Kategori Seç --</option>';
+          cats.forEach(cat => {
+            options += `<option value="${cat.id}">${cat.name}</option>`;
+          });
+          const selects = document.querySelectorAll(`select[onchange*="${sub.channelId}"]`);
+          selects.forEach(s => s.innerHTML = options);
+        });
+      });
+    }
+
     async function addCategory() {
       const name = document.getElementById('categoryName').value.trim();
       if (!name) {
-        alert('Please enter a category name');
+        alert('Kategori adı giriniz');
         return;
       }
-      
+
       try {
-        const res = await fetch(API_URL + '/categories', {
+        const res = await fetch(API_BASE + '/categories', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ name })
         });
-        
+
         if (res.ok) {
           document.getElementById('categoryName').value = '';
           await loadCategories();
         } else {
-          alert('Category already exists');
+          alert('Kategori zaten var');
         }
-      } catch (err) {
-        console.error('Error adding category:', err);
+      } catch (error) {
+        console.error('Error:', error);
       }
     }
-    
-    async function addChannel() {
-      const channelId = document.getElementById('channelId').value.trim();
-      const channelName = document.getElementById('channelName').value.trim();
-      const categoryId = document.getElementById('categorySelect').value;
-      
-      if (!channelId || !channelName || !categoryId) {
-        alert('Please fill all fields');
-        return;
-      }
-      
+
+    async function categorizeSubscription(channelId, title, thumbnail, categoryId) {
+      if (!categoryId) return;
+
       try {
-        const res = await fetch(API_URL + '/channels', {
+        const res = await fetch(API_BASE + `/subscriptions/${channelId}/categorize`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ channel_id: channelId, channel_name: channelName, category_id: categoryId })
+          body: JSON.stringify({ channel_title: title, channel_thumbnail: thumbnail, category_id: categoryId })
         });
-        
+
         if (res.ok) {
-          document.getElementById('channelId').value = '';
-          document.getElementById('channelName').value = '';
-          document.getElementById('categorySelect').value = '';
-          await loadChannels();
+          await loadSubscriptions();
         } else {
-          alert('Channel already exists');
+          alert('Kanal zaten kategorileri');
         }
-      } catch (err) {
-        console.error('Error adding channel:', err);
+      } catch (error) {
+        console.error('Error:', error);
       }
     }
-    
-    function selectCategory(id) {
-      currentCategoryId = currentCategoryId === id ? null : id;
-      loadCategories();
-      loadChannels();
+
+    function filterByCategory(catId) {
+      currentCategory = currentCategory === catId ? null : catId;
+      if (currentCategory) {
+        const filtered = allSubscriptions.filter(sub => sub.categoryId === catId);
+        displaySubscriptions(filtered);
+      } else {
+        displaySubscriptions(allSubscriptions);
+      }
     }
-    
-    // Initial load
-    loadCategories();
-    loadChannels();
-    
-    // Refresh data every 5 seconds
-    setInterval(() => {
-      loadCategories();
-      loadChannels();
-    }, 5000);
+
+    async function logout() {
+      await fetch(API_BASE + '/logout');
+      window.location.reload();
+    }
+
+    // Check URL parameters
+    if (new URLSearchParams(window.location.search).get('authenticated') === 'true') {
+      window.history.replaceState({}, document.title, window.location.pathname);
+    }
+
+    init();
   </script>
 </body>
 </html>
